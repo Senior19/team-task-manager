@@ -1,0 +1,15 @@
+[build]
+  builder = "NIXPACKS"
+
+[[services]]
+  http_port = 5000
+  env = "node"
+  root_dir = "backend"
+
+  [[services.deploy]]
+  dir = "frontend"
+  env = "static"
+  healthcheck_path = "/"
+
+  [services.depends_on]
+  postgres = {}

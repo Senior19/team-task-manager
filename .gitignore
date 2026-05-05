@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+backend/.env
+
+# Build output
+frontend/build/
+frontend/.cache/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+dump.sql
+*.sql.gz
+pgdata/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Claude Code internal
+.claude/
+
+# Local DB connection file (contains credentials)
+db.js
+
+# Misc
+.npm
+.eslintcache
