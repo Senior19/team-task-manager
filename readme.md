@@ -356,6 +356,5 @@ Body: { "title": "string", "projectId": 1, "assignedTo": 5 }
 
 ---
 
-## License
 
-This project is licensed under the MIT License.
+
