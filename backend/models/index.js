@@ -1,11 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
 
+const isRemote = process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('localhost');
+
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   dialectOptions: {
-    ssl: process.env.NODE_ENV === 'production' ? { require: true, rejectUnauthorized: false } : false,
-    native: true
+    ssl: isRemote ? { require: true, rejectUnauthorized: false } : false
   },
   logging: false,
   pool: { max: 10, min: 0, acquire: 30000, idle: 10000 }
@@ -36,6 +37,11 @@ const Task = sequelize.define('Task', {
   priority: { 
     type: DataTypes.ENUM('low', 'medium', 'high'), 
     defaultValue: 'medium' 
+  },
+  assignedTo: { 
+    type: DataTypes.INTEGER, 
+    allowNull: true,
+    references: { model: 'Users', key: 'id' }
   }
 });
 

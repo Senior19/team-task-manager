@@ -8,8 +8,11 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Configure axios base URL
-  axios.defaults.baseURL = 'http://localhost:5001';
+  // Configure axios base URL - use environment variable or default to localhost for development
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+  axios.defaults.baseURL = API_URL;
+  
+  console.log('🔗 Frontend API URL:', API_URL);
 
   useEffect(() => {
     const token = localStorage.getItem('token');

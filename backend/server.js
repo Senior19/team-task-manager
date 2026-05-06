@@ -27,25 +27,29 @@ const PORT = process.env.PORT || 5001;
 
 const startServer = async () => {
   try {
+    console.log('🔍 Connecting to database:', process.env.DATABASE_URL ? 'RAILWAY_URL (production)' : 'LOCAL_URL');
+    
     await sequelize.authenticate();
-    console.log('Database connection authenticated.');
+    console.log('✅ Database connection authenticated.');
 
-    await sequelize.sync();
-    console.log('Database synced.');
+    // Force sync to create/update all tables on startup
+    await sequelize.sync({ force: false, alter: true });
+    console.log('✅ Database synced - All tables created/updated.');
 
     const server = app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`🚀 Server running on port ${PORT}`);
     });
 
     server.on('error', (error) => {
       if (error.code === 'EADDRINUSE') {
-        console.error(`Port ${PORT} is already in use. Stop the process using it or choose another PORT.`);
+        console.error(`❌ Port ${PORT} is already in use. Stop the process using it or choose another PORT.`);
       } else {
-        console.error('Server error:', error);
+        console.error('❌ Server error:', error);
       }
     });
   } catch (error) {
-    console.error('Unable to start server:', error);
+    console.error('❌ Unable to start server:', error.message);
+    console.error('📋 Full error details:', error);
     process.exit(1);
   }
 };
